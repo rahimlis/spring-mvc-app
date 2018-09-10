@@ -46,7 +46,7 @@ public class OffersDaoTest {
     }
 
     @Test
-    public void testOfferDao() {
+    public void testCreateOffer() {
         User user = new User("rahimlis", "Rahim Rahimli", "rahim@mail.ru",
                 "hellothere", true, "user");
         assertTrue("User creation should be done", usersDao.create(user));
@@ -60,4 +60,46 @@ public class OffersDaoTest {
         assertEquals("Offers table should contain one record", 1, offers.size());
 
     }
+
+
+    @Test
+    public void testRetrieveById() {
+        User user = new User("rahimlis", "Rahim Rahimli", "rahim@mail.ru",
+                "hellothere", true, "user");
+        assertTrue("User creation should be done", usersDao.create(user));
+
+        Offer offer = new Offer(user, "Sample text for test");
+
+        assertTrue("Offer creation should be true", offerDao.create(offer));
+
+        List<Offer> offers = offerDao.offers();
+
+        for (Offer listOffer : offers) {
+            Offer retrieved = offerDao.offer(listOffer.getId());
+            assertEquals("Retrieved by id offer should match offer from list", retrieved, listOffer);
+        }
+    }
+
+    @Test
+    public void testRetrieveByUserName() {
+        User user = new User("testuser", "Test", "test@mail.ru",
+                "hellothere", true, "user");
+
+        assertTrue("User creation should be done", usersDao.create(user));
+
+        Offer offer = new Offer(user, "Sample text for test");
+        Offer offer2 = new Offer(user, "Second offer text for test");
+
+        assertTrue("Offer creation should be true", offerDao.create(offer));
+        assertTrue("Second offer creation should be true", offerDao.create(offer2));
+
+        List<Offer> listOfUserOffers = offerDao.offers(user.getUsername());
+
+        assertEquals("list should contain 2 elements", 2, listOfUserOffers.size());
+        assertEquals("First offer check", offer, listOfUserOffers.get(0));
+        assertEquals("Second offer check", offer, listOfUserOffers.get(0));
+
+    }
+
+
 }

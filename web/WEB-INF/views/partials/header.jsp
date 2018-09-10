@@ -9,6 +9,7 @@
             <a style="margin-left: 2%" href="${pageContext.request.contextPath}/" class="brand-logo">WebApp</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li><a href="<c:url value='/offers'/>">View offers</a></li>
+                <li><a href="<c:url value='/blog'/>">Blog</a></li>
 
                 <sec:authorize access="hasRole('ROLE_ADMIN')">
                     <li><a href="<c:url value='/admin'/>">Admin</a></li>

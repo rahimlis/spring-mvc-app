@@ -16,10 +16,8 @@
         <div class="row">
             <div class="col s10 offset-s1">
                 <h4>Your offer has been created!</h4>
-                <h5>Name: ${offer.user.name}</h5>
-                <h5>Email: ${offer.user.email}</h5>
+                <h5>Username: ${offer.username}</h5>
                 <h5>Text: ${offer.text}</h5>
-                <h5>Birthday: ${offer.birthday}</h5>
             </div>
         </div>
         <div class="card-action">

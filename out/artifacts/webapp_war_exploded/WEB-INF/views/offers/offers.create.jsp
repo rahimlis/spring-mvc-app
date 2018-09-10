@@ -28,19 +28,6 @@
             <form:form class="col s10 offset-s1" action="${pageContext.request.contextPath}/offers/store"
                        commandName="offer" method="POST">
 
-
-                <%--<div class="row">--%>
-                    <%--<div class="input-field col s12">--%>
-
-                        <%--<form:input placeholder="Please enter your birthday" id="birthday" name="birthday" type="text"--%>
-                                    <%--class="datepicker" path="birthday"/>--%>
-
-                        <%--<label for="birthday">Birthday</label>--%>
-                        <%--<span class="helper-text materialize-red-text"><form:errors--%>
-                                <%--path="birthday"/></span>--%>
-                    <%--</div>--%>
-                <%--</div>--%>
-
                 <div class="row">
                     <div class="input-field col s12">
                         <form:textarea placeholder="Please enter a text of offer" id="text" name="text"

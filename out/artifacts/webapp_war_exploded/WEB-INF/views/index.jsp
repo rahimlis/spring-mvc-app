@@ -22,12 +22,13 @@
     <div class="card">
         <div class="row">
             <div class="col s9 offset-s2">
-                <h2>Welcome to offers app</h2>
+                <h2>Welcome to Spring app</h2>
             </div>
         </div>
         <div class="card-action">
             <a href="${pageContext.request.contextPath}/offers">View offers</a>
             <a href="${pageContext.request.contextPath}/offers/create">Create offer</a>
+            <a href="${pageContext.request.contextPath}/posts/create">Create Blog post</a>
         </div>
     </div>
 

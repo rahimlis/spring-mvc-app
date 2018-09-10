@@ -1,5 +1,6 @@
 package com.bakudynamics.mvc.dao;
 
+import com.bakudynamics.mvc.dao.mappers.OfferRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.*;
 import org.springframework.stereotype.Component;
@@ -20,7 +21,15 @@ public class OfferDao {
 
     public List<Offer> offers() {
 
-        return jdbc.query("select * from offers,users where offers.username=users.username", (resultSet, rowNum) -> getOfferFromResultSet(resultSet));
+        return jdbc.query("select * from offers,users where offers.username=users.username and users.enabled=1",
+                new OfferRowMapper());
+    }
+
+    public List<Offer> offers(String username) {
+
+        return jdbc.query("select * from offers,users where offers.username=users.username and users.enabled=1 " +
+                        "and offers.username=:username", new MapSqlParameterSource("username", username),
+                new OfferRowMapper());
     }
 
     public boolean create(Offer offer) {
@@ -41,28 +50,10 @@ public class OfferDao {
      */
     public Offer offer(int id) {
         MapSqlParameterSource params = new MapSqlParameterSource("id", id);
-        return jdbc.queryForObject("select * from offers where id = :id", params, (resultSet, i) ->
-                getOfferFromResultSet(resultSet));
+        return jdbc.queryForObject("select * from offers,users where offers.username=users.username" +
+                " and users.enabled=1 and id = :id", params, new OfferRowMapper());
     }
 
-    private Offer getOfferFromResultSet(ResultSet resultSet) throws SQLException {
-        Offer offer = new Offer();
-        User user = extractUser(resultSet);
-        offer.setId(resultSet.getInt("id"));
-        offer.setText(resultSet.getString("text"));
-        offer.setUser(user);
-        return offer;
-    }
-
-    private User extractUser(ResultSet resultSet) throws SQLException {
-        User user = new User();
-        user.setAuthority(resultSet.getString("authority"));
-        user.setEmail(resultSet.getString("email"));
-        user.setName(resultSet.getString("name"));
-        user.setUsername(resultSet.getString("username"));
-        user.setEnabled(resultSet.getBoolean("enabled"));
-        return user;
-    }
 
     @Autowired
     public void setDataSource(DataSource dataSource) {
